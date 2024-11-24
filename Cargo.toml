@@ -1,0 +1,31 @@
+[package]
+name = "Hooke_Jeeves"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "sequential_hj"
+path = "Hooke_Jeeves/sequential.rs"
+
+[[bin]]
+name = "threads_hj"
+path = "Hooke_Jeeves/parallel/threads.rs"
+
+[[bin]]
+name = "mpi_hj"
+path = "Hooke_Jeeves/parallel/mpi.rs"
+
+[[bin]]
+name = "hybrid_hj"
+path = "Hooke_Jeeves/parallel/hybrid.rs"
+
+[dependencies]
+rand = "0.8.5"
+num_cpus = "1.16"
+crossbeam-channel = "0.5.13"
+mpi = { version = "0.8.0", features = ["user-operations", "derive"] }
+
+[profile.release]
+lto = true 
+strip = "debuginfo" 
+codegen-units = 2 
