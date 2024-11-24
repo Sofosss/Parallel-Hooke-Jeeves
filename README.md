@@ -41,7 +41,7 @@ $$f(x) = \sum_{i=1}^{n-1} \left( 100 \cdot (x_{i+1} - x_i^2)^2 + (1 - x_i)^2 \ri
 
 The Rosenbrock function is a common benchmark for optimization algorithms, having a global minimum at $(1, 1, \dots, 1)$, where the function value is 0. This function is non-convex, which poses challenges for gradient-based optimization methods, making it a good test case for global optimization algorithms. For more details, refer [here][rosenbrock-link].
 
-> [!INFO]  
+> [!NOTE]  
 > An implementation of the Hooke-Jeeves method in C is available at [NetLib][netlib-link]. This implementation computes a point $X$ where the nonlinear function $f(X)$ achieves a local minimum. The objective function $f(X)$ is scalar, defined as: $f: \mathbb{R}^n \to \mathbb{R}^1$. The Rust implementation of the Hooke-Jeeves method in this project is based on this C implementation from NetLib.
 
 # Installation
@@ -51,15 +51,15 @@ To get started with this project, ensure that the following prerequisites are me
 1. **Rust** (edition >= **2021**) is installed on your system.    
 
 2. An **MPI** implementation is installed, such as:  
-   - [OpenMPI](open-mpi-link)  
-   - [MPICH](mpich-link)  
+   - [OpenMPI][open-mpi-link]  
+   - [MPICH][mpich-link]  
 
 Ensure that the `mpirun` command is available in your system's **PATH** for running the MPI-based binaries.
 
 1. **Clone the repository and navigate to the project's directory**:  
    ```bash
-   git clone https://github.com/Sofosss/CEID-Parallel_Hooke-Jeeves.git
-   cd CEID-Parallel_Hooke-Jeeves
+   git clone https://github.com/Sofosss/Parallel-Hooke-Jeeves.git
+   cd Parallel-Hooke-Jeeves
    ```
 2. **The project includes 4 binary crates (each corresponding to a different scheme of the Hooke-Jeeves Method (multithreading, multiprocessing, hybrid and sequential)). Install them with**:
     ```bash
@@ -103,7 +103,7 @@ All binaries require two mandatory arguments:
     ```bash
     mpirun -n <nprocesses> hybrid_hj <nvars> <ntrials> <nthreads>
     ```
-> [!INFO]
+> [!NOTE]
 > If you prefer not to manually build or install the binaries using `cargo`, you can use the provided [script][run-link]. This script automates the process of building and running the required binary for any of the implemented schemes. To use the script, ensure it is executable by running the command `chmod +x run.sh`. Once the script is ready, you can run it by specifying the binary name along with the required arguments.
 
 # Software Overview
@@ -116,17 +116,17 @@ In this project, three parallelization schemes for the Multistart Hooke-Jeeves O
 
 3. **Hybrid Model (MPI processes + threads)**: A combination of multithreading and MPI-based multiprocessing is employed in this scheme. Each MPI process spawns multiple threads to further parallelize the workload within its assigned subset of trials. The threads within each MPI process independently execute the Hooke-Jeeves method on their allocated trials and compute their respective thread-local minima. Once all threads within a process complete execution, the main thread of that process identifies the process-local minimum by comparing the thread-local minima. The process-local minima are then communicated to the main MPI process, which gathers them using an MPI gather operation and determines the global minimum by comparing these values. This design efficiently combines multithreading for intra-process parallelism with MPI-based multiprocessing for inter-process parallelism. The implementation for this hybrid approach is available [here][hybrid-model-link].
 
-> [!INFO] 
+> [!NOTE] 
 > The parallel implementations are based on the [sequential version][seq-vers-link] of the algorithm, which initiates $n_{\text{trials}}$ random starting points in a search space of $n_{\text{vars}}$ dimensions, applies the Hooke-Jeeves method to each starting point and determines the global minimum by comparing the outcomes across all trials. The search space for each dimension is constrained to the interval $[-5, 5]$ and the default parameters from the [NetLib implementation][netlib-link] of the Hooke-Jeeves algorithm are utilized.
 
 # Tests and Results
-To evaluate and compare the performance of the different parallelization schemes implemented for the Hooke-Jeeves method, the [benchmarking script](benchmark-link) was utilized. For each combination of workers' arguments, five runs were executed and the average result was taken. The tests were conducted using a fixed number of 32 variables (`nvars`) and 65536 trials (`ntrials`).
+To evaluate and compare the performance of the different parallelization schemes implemented for the Hooke-Jeeves method, the [benchmarking script][benchmark-link] was utilized. For each combination of workers' arguments, five runs were executed and the average result was taken. The tests were conducted using a fixed number of 32 variables (`nvars`) and 65536 trials (`ntrials`).
 
 All executions were conducted on an Nvidia DGX system (128 logical CPU cores [64 physical cores - 2 threads per core], 1 TB of DDR4 RAM).
 
 <br>
 <p align="center">
- <img src="./media/strong_scaling.png"  alt="Strong Scaling Comparison Graph" width = 80%>
+ <img src="./media/strong_scaling.png"  alt="Strong Scaling Comparison Graph" width = 95%>
     <br>
     <em><i>Figure 1: Comparison of speedup for multithreading and MPI-based multiprocessing schemes</i></em>
 </p>
@@ -135,7 +135,7 @@ The graph above shows a comparison of speedup between the multithreading and MPI
 
 <br>
 <p align="center">
- <img src="./media/hybrid_scheme.png"  alt="Hybrid Scheme SpeedUp Graph" width = 55%>
+ <img src="./media/hybrid_scheme.png"  alt="Hybrid Scheme SpeedUp Graph" width = 75%>
     <br>
     <em><i>Figure 2: Performance comparison of the hybrid scheme with 1, 2 and 4 threads per MPI process</i></em>
 </p>
@@ -167,3 +167,5 @@ Distributed under the [MIT] License. See `LICENSE.md` for more details.
 [mpich-link]: https://www.mpich.org/
 [run-link]: ./run.sh
 [benchmark-link]: ./benchmark.sh
+[open-mpi-link]: https://www.open-mpi.org/
+[mpich-link]: https://www.mpich.org/

@@ -22,7 +22,6 @@ path = "Hooke_Jeeves/parallel/hybrid.rs"
 [dependencies]
 rand = "0.8.5"
 num_cpus = "1.16"
-crossbeam-channel = "0.5.13"
 mpi = { version = "0.8.0", features = ["user-operations", "derive"] }
 
 [profile.release]
