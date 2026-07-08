@@ -13,11 +13,13 @@ labels = ["Multithreading", "MPI"]
 colors = ["forestgreen",  "darkorange"]
 
 plt.rcParams['font.family'] = 'DejaVu Serif'
-plt.rcParams['axes.labelsize'] = 16
+plt.rcParams['axes.labelsize'] = 24
 plt.rcParams['axes.titlesize'] = 18
-plt.rcParams['xtick.labelsize'] = 14
-plt.rcParams['ytick.labelsize'] = 14
-plt.rcParams['legend.fontsize'] = 12
+plt.rcParams['xtick.labelsize'] = 21
+plt.rcParams['ytick.labelsize'] = 21
+plt.rcParams['xtick.major.width'] = 1.2
+plt.rcParams['ytick.major.width'] = 1.2
+plt.rcParams['legend.fontsize'] = 19
 plt.rcParams['legend.title_fontsize'] = 13
 
 plt.rcParams['text.color'] = 'white'; plt.rcParams['axes.labelcolor'] = 'white'; plt.rcParams['xtick.color'] = 'white'; plt.rcParams['ytick.color'] = 'white'
@@ -39,7 +41,7 @@ def linear_scale(values, ticks):
 
 speedups = [d[0]/d for d in schemes]; efficiencies = [(d[0] / d) / WORKERS for d in schemes]
 
-fig, axes = plt.subplots(1, 2, figsize = (17, 5.5), dpi = 1200)
+fig, axes = plt.subplots(1, 2, figsize = (17, 4.8), dpi = 1200)
 
 ax1, ax2 = axes
 
@@ -59,16 +61,19 @@ ax1.plot(
     np.arange(len(WORKERS)),
     np.arange(len(WORKERS)),
     linestyle = '--',
-    color = 'midnightblue',
+    color = 'dodgerblue',
     linewidth = 2,
     label = 'Ideal Speedup'
 )
 
-ax1.set_xlabel('Workers', fontsize = 18, labelpad = 10)
-ax1.set_ylabel('Speedup', fontsize = 18)
+ax1.set_xlabel('Workers', labelpad = 10)
+ax1.set_ylabel('Speedup')
 
 ax1.set_xticks(np.arange(len(WORKERS)))
-ax1.set_xticklabels(WORKERS, fontsize = 18)
+ax1.set_xticklabels(WORKERS)
+
+ax1.set_yticks(np.arange(len(WORKERS)))
+ax1.set_yticklabels(WORKERS)
 
 ax1.grid(True, axis = 'both', linestyle = '--', linewidth = 0.62, alpha = 0.55)
 
@@ -86,15 +91,16 @@ ax1_legend = ax1.legend(
     edgecolor = 'white',
     ncols = 2,
     framealpha = 1.0,
+    columnspacing = 0.65,
+    handletextpad = 0.3,
     shadow = True,
-    fontsize = 12.5,
-    bbox_to_anchor = (0.005, 0.9)
+    bbox_to_anchor = (0.005, 0.82)
 )
 
 ax1.add_artist(ax1_legend)
 
 ideal_speedup_handle = [
-    Line2D([0], [0], color = 'midnightblue', linestyle = '--', lw = 2)
+    Line2D([0], [0], color = 'dodgerblue', linestyle = '--', lw = 2)
 ]
 
 ax1.legend(
@@ -105,9 +111,9 @@ ax1.legend(
     facecolor = '#1a1a1a',
     edgecolor = 'white',
     framealpha = 1.0,
+    handletextpad = 0.3,
     shadow = True,
-    fontsize = 13.5,
-    bbox_to_anchor = (0.005, 0.8)
+    bbox_to_anchor = (0.005, 0.66)
 )
 
 
@@ -125,22 +131,20 @@ ax2.plot(
     np.arange(len(WORKERS)),
     np.ones_like(WORKERS),
     linestyle = '--',
-    color = 'midnightblue',
+    color = 'dodgerblue',
     linewidth = 2,
     label = 'Ideal Efficiency'  
 )
 
-ax2.set_xlabel('Workers', fontsize = 18, labelpad = 10)
-ax2.set_ylabel('Parallel Efficiency', fontsize = 18)
+ax2.set_xlabel('Workers', labelpad = 10)
+ax2.set_ylabel('Parallel Efficiency')
 
 ax2.set_xticks(np.arange(len(WORKERS)))
-ax2.set_xticklabels(WORKERS, fontsize = 18)
+ax2.set_xticklabels(WORKERS)
 
 ax2.set_yticks(np.linspace(0, 1, 6))
 ax2.set_yticklabels(
-    [f"{x*100:.0f}%" for x in np.linspace(0, 1, 6)],
-    fontsize = 18
-)
+    [f"{x*100:.0f}%" for x in np.linspace(0, 1, 6)])
 
 ax2.set_ylim(0, 1.05)
 
@@ -155,15 +159,16 @@ ax2_legend = ax2.legend(
     edgecolor = 'white',
     ncols = 2,
     framealpha = 1.0,
+    columnspacing = 0.65,
+    handletextpad = 0.3,
     shadow = True,
-    fontsize = 12.5,
-    bbox_to_anchor = (0.005, 0.02)
+    bbox_to_anchor = (0.005, 0.013)
 )
 
 ax2.add_artist(ax2_legend)
 
 ideal_efficiency_handle = [
-    Line2D([0], [0], color = 'midnightblue', linestyle = '--', lw = 2)
+    Line2D([0], [0], color = 'dodgerblue', linestyle = '--', lw = 2)
 ]
 
 ax2.legend(
@@ -174,9 +179,9 @@ ax2.legend(
     facecolor = '#1a1a1a',
     edgecolor = 'white',
     framealpha = 1.0,
+    handletextpad = 0.3,
     shadow = True,
-    fontsize = 13.5,
-    bbox_to_anchor = (0.005, 0.12)
+    bbox_to_anchor = (0.005, 0.173)
 )
 
 for ax in axes:

@@ -105,7 +105,7 @@ All binaries require two mandatory arguments:
     ```bash
     mpirun -n <nprocesses> mpi_hj <nvars> <ntrials>
     ```
-- **Hybrid** (MPI + threads):
+- **Hybrid** (MPI + threads)
     
     Requires both the number of **processes** and **threads**.
     ```bash
@@ -138,7 +138,7 @@ As shown in Figure 1, both schemes demonstrate strong scaling behavior. The mult
   <picture>
     <source srcset = "plots/figs/fig1_dark.png" media = "(prefers-color-scheme: dark)">
     <source srcset = "plots/figs/fig1_light.png" media = "(prefers-color-scheme: light)">
-    <img src = "plots/figs/fig1_dark.png" width = "95%" alt = "Comparison of the multithreading and MPI-based multiprocessing schemes in terms of strong scaling speedup (left) and parallel efficiency (right)">
+    <img src = "plots/figs/fig1_dark.png" width = "100%" alt = "Comparison of the multithreading and MPI-based multiprocessing schemes in terms of strong scaling speedup (left) and parallel efficiency (right)">
   </picture>
   <br>
   <em>Figure 1: Comparison of the multithreading and MPI-based multiprocessing schemes in terms of strong scaling speedup (left) and parallel efficiency (right)</em>
@@ -152,12 +152,11 @@ Regarding the hybrid scheme, as shown in Figure 2, it achieves very strong scali
   <picture>
      <source srcset = "plots/figs/fig2_dark.png" media = "(prefers-color-scheme: dark)">
       <source srcset = "plots/figs/fig2_light.png" media = "(prefers-color-scheme: light)">
-     <img src = "plots/figs/fig2_dark.png" width = "90%" alt = "Strong scaling speedup of the hybrid scheme using 1, 2, and 4 threads per MPI process">
+     <img src = "plots/figs/fig2_dark.png" width = "70%" alt = "Strong scaling speedup of the hybrid scheme using 1, 2, and 4 threads per MPI process">
   </picture>
   <br>
   <em>Figure 2: Strong scaling speedup of the hybrid scheme using 1, 2, and 4 threads per MPI process</em>
 </p>
-
 
 
 ## Contact
