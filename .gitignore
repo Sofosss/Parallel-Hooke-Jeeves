@@ -1,0 +1,6 @@
+venv
+*.ipynb
+*_cp.rs
+/target
+Cargo.lock
+/results
